@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using WeatherTest.Core.Interfaces;
 
@@ -46,6 +47,21 @@ namespace WeatherTest.Infrastructure.Services
                 return default(T);
             }
         }
+
+        public List<T> DeserializeList<T>(string json)
+        {
+            try
+            {
+                var obj = JsonConvert.DeserializeObject<List<T>>(json);
+                return obj;
+            }
+            catch (JsonReaderException ex)
+            {
+                //log
+                return new List<T>();
+            }
+        }
+
     }
 
 
