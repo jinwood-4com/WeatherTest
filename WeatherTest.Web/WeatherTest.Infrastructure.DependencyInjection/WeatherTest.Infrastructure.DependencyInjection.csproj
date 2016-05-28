@@ -75,6 +75,20 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WeatherTest.Core\WeatherTest.Core.csproj">
+      <Project>{f404591f-4e22-4b6e-9d5d-7e35c76856cb}</Project>
+      <Name>WeatherTest.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WeatherTest.Infrastructure.ExternalProviders\WeatherTest.Infrastructure.ExternalProviders.csproj">
+      <Project>{86656c6e-2a6b-43a1-a20c-5c499d099c92}</Project>
+      <Name>WeatherTest.Infrastructure.ExternalProviders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WeatherTest.Infrastructure.Services\WeatherTest.Infrastructure.Services.csproj">
+      <Project>{f45fcfa5-bd31-491a-91fb-297023e44dc7}</Project>
+      <Name>WeatherTest.Infrastructure.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

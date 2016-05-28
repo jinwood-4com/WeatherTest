@@ -1,6 +1,9 @@
 ﻿using SimpleInjector.Packaging;
-using System;
 using SimpleInjector;
+using WeatherTest.Core.Interfaces;
+using WeatherTest.Infrastructure.Services;
+using WeatherTest.Core.Services;
+using WeatherTest.Infrastructure.ExternalProviders;
 
 namespace WeatherTest.Infrastructure.DependencyInjection
 {
@@ -8,7 +11,9 @@ namespace WeatherTest.Infrastructure.DependencyInjection
     {
         public void RegisterServices(Container container)
         {
-            throw new NotImplementedException();
+            container.Register<IRestService, RestService>();
+            container.Register<IWeatherService, WeatherService>();
+            container.Register<IWeatherProvider, WeatherProvider>();
         }
     }
 }
