@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherTest.Mvc", "WeatherT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherTest.Infrastructure.ExternalProviders", "WeatherTest.Infrastructure.ExternalProviders\WeatherTest.Infrastructure.ExternalProviders.csproj", "{86656C6E-2A6B-43A1-A20C-5C499D099C92}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherTest.Infrastructure", "WeatherApiConfigurationSettings.cs\WeatherTest.Infrastructure.csproj", "{CD7A7E34-3575-4431-AA63-746C2B9A8909}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{86656C6E-2A6B-43A1-A20C-5C499D099C92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86656C6E-2A6B-43A1-A20C-5C499D099C92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86656C6E-2A6B-43A1-A20C-5C499D099C92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD7A7E34-3575-4431-AA63-746C2B9A8909}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD7A7E34-3575-4431-AA63-746C2B9A8909}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD7A7E34-3575-4431-AA63-746C2B9A8909}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD7A7E34-3575-4431-AA63-746C2B9A8909}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,5 +58,6 @@ Global
 		{D63268F7-BF87-4F17-8331-1927A36FE55E} = {B9A28CB3-DAEC-4280-A938-AEF55B621E2D}
 		{F45FCFA5-BD31-491A-91FB-297023E44DC7} = {B9A28CB3-DAEC-4280-A938-AEF55B621E2D}
 		{86656C6E-2A6B-43A1-A20C-5C499D099C92} = {B9A28CB3-DAEC-4280-A938-AEF55B621E2D}
+		{CD7A7E34-3575-4431-AA63-746C2B9A8909} = {B9A28CB3-DAEC-4280-A938-AEF55B621E2D}
 	EndGlobalSection
 EndGlobal

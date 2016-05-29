@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using WeatherTest.Core.Enums;
+using WeatherTest.Core.Helpers;
 using WeatherTest.Core.Interfaces;
 using WeatherTest.Core.Objects;
 
@@ -9,23 +10,24 @@ namespace WeatherTest.Infrastructure.ExternalProviders
     public class WeatherProvider : IWeatherProvider
     {
         private readonly IRestService _restService;
+        private readonly IWeatherApisConfiguration _weatherApis;
 
-        public WeatherProvider(IRestService restService)
+        public WeatherProvider(IRestService restService, IWeatherApisConfiguration weatherApis)
         {
             _restService = restService;
+            _weatherApis = weatherApis;
         }
 
         public WeatherResult GetWeatherResultFromProviderByArea(string location)
         {
             var imperialResults = new List<ImperialResponse>();
             var metricResults = new List<MetricResponse>();
-            var apis = GetApis();
-            foreach (var api in apis)
+            foreach (var api in _weatherApis.Apis)
             {
                 var uri = new Uri(api.Url);
                 var jsonResponse = _restService.Get(uri);
 
-                if (api.MeasurmentType == MeasurmentType.Imperial)
+                if (EnumHelper<MeasurmentType>.Parse(api.MeasurmentType) == MeasurmentType.Imperial)
                 {
                     imperialResults.Add(_restService.Deserialize<ImperialResponse>(jsonResponse));
                 }
@@ -76,23 +78,23 @@ namespace WeatherTest.Infrastructure.ExternalProviders
             return metricResponses;
         } 
 
-        private List<Api> GetApis()
-        {
-            return new List<Api>
-            {
-                new Api
-                {
-                    MeasurmentType = MeasurmentType.Imperial,
-                    Url = "http://localhost:53077/api/Accuweather/dorset",
-                    Name = "Accu"
-                },
-                new Api
-                {
-                    MeasurmentType = MeasurmentType.Metric,
-                    Url = "http://localhost:53523/api/bbcweather/dorset",
-                    Name = "BBC"
-                }
-            };
-        } 
+        //private List<Api> GetApis()
+        //{
+        //    return new List<Api>
+        //    {
+        //        new Api
+        //        {
+        //            MeasurmentType = MeasurmentType.Imperial,
+        //            Url = "http://localhost:53077/api/Accuweather/dorset",
+        //            Name = "Accu"
+        //        },
+        //        new Api
+        //        {
+        //            MeasurmentType = MeasurmentType.Metric,
+        //            Url = "http://localhost:53523/api/bbcweather/dorset",
+        //            Name = "BBC"
+        //        }
+        //    };
+        //} 
     }
 }

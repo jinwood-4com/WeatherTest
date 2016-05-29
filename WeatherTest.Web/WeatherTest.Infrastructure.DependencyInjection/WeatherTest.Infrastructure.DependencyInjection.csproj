@@ -51,6 +51,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
@@ -76,6 +77,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WeatherApiConfigurationSettings.cs\WeatherTest.Infrastructure.csproj">
+      <Project>{CD7A7E34-3575-4431-AA63-746C2B9A8909}</Project>
+      <Name>WeatherTest.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WeatherTest.Core\WeatherTest.Core.csproj">
       <Project>{f404591f-4e22-4b6e-9d5d-7e35c76856cb}</Project>
       <Name>WeatherTest.Core</Name>
