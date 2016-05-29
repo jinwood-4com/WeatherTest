@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using WeatherTest.Core.Enums;
 using WeatherTest.Core.Interfaces;
 using WeatherTest.Core.Objects;
-using WeatherTest.Infrastructure.ExternalProviders.Models;
 
 namespace WeatherTest.Infrastructure.ExternalProviders
 {
@@ -16,31 +17,82 @@ namespace WeatherTest.Infrastructure.ExternalProviders
 
         public WeatherResult GetWeatherResultFromProviderByArea(string location)
         {
-            var accuUri = new Uri($"http://localhost:53077/api/Accuweather/{location}");
-            var accuResult = _restService.Get(accuUri);
+            var imperialResults = new List<ImperialResponse>();
+            var metricResults = new List<MetricResponse>();
+            var apis = GetApis();
+            foreach (var api in apis)
+            {
+                var uri = new Uri(api.Url);
+                var jsonResponse = _restService.Get(uri);
 
-            var bbcUri = new Uri($"http://localhost:53523/api/bbcweather/{location}");
-            var bbcResult = _restService.Get(bbcUri);
+                if (api.MeasurmentType == MeasurmentType.Imperial)
+                {
+                    imperialResults.Add(_restService.Deserialize<ImperialResponse>(jsonResponse));
+                }
+                else
+                {
+                    metricResults.Add(_restService.Deserialize<MetricResponse>(jsonResponse));
+                }
+            }
 
-            return Aggregate(accuResult, bbcResult, location);
+            return Aggregate(imperialResults, metricResults, location);
         }
 
-        public WeatherResult Aggregate(string imperialJson, string metricJson, string location)
+        public WeatherResult Aggregate(List<ImperialResponse> imperialResponses, List<MetricResponse> metricResponses,
+            string location)
         {
-            var accuResult = _restService.Deserialize<AccuResponse>(imperialJson);
-            var bbcResult = _restService.Deserialize<BbcResponse>(metricJson);
+            metricResponses.AddRange(ConverToMetric(imperialResponses));
+            var totalCount = metricResponses.Count;
 
-            accuResult.WindSpeedKph = 8;
-            bbcResult.WindSpeedMph = 10;
-
-            var weatherResult = new WeatherResult
-            {
-                AverageWindSpeedMph = Math.Round((bbcResult.WindSpeedMph + accuResult.WindspeedMph())/2,2),
-                AverageTemperatureCelcius = Math.Round((bbcResult.TemperatureCelcius() + accuResult.TemperatureCelsius)/2,2),
-                Location = location
-            };
+            var totalTemp = 0.0d;
+            var totalWind = 0.0d;
             
+            foreach (var response in metricResponses)
+            {
+                totalTemp += response.TemperatureFahrenheit;
+                totalWind += response.WindSpeedMph;
+            }
+            var weatherResult = new WeatherResult();
+            weatherResult.AverageTemperatureCelcius = totalTemp/totalCount;
+            weatherResult.AverageWindSpeedMph = totalWind/totalCount;
+            weatherResult.Location = location;
+
             return weatherResult;
         }
+
+        private List<MetricResponse> ConverToMetric(List<ImperialResponse> imperialResponses)
+        {
+            var metricResponses = new List<MetricResponse>();
+            foreach (var response in imperialResponses)
+            {
+                metricResponses.Add(new MetricResponse
+                {
+                    WindSpeedMph = response.WindspeedMph(),
+                    TemperatureFahrenheit = response.TemperatureFahrenheit(),
+                    Location = response.Location
+                });
+            }
+
+            return metricResponses;
+        } 
+
+        private List<Api> GetApis()
+        {
+            return new List<Api>
+            {
+                new Api
+                {
+                    MeasurmentType = MeasurmentType.Imperial,
+                    Url = "http://localhost:53077/api/Accuweather/dorset",
+                    Name = "Accu"
+                },
+                new Api
+                {
+                    MeasurmentType = MeasurmentType.Metric,
+                    Url = "http://localhost:53523/api/bbcweather/dorset",
+                    Name = "BBC"
+                }
+            };
+        } 
     }
 }

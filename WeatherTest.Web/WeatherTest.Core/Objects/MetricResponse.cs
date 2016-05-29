@@ -1,6 +1,6 @@
-﻿namespace WeatherTest.Infrastructure.ExternalProviders.Models
+﻿namespace WeatherTest.Core.Objects
 {
-    public class BbcResponse
+    public class MetricResponse
     {
         public string Location { get; set; }
         public double TemperatureFahrenheit { get; set; }

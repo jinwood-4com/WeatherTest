@@ -6,6 +6,7 @@ namespace WeatherTest.Core.Interfaces
     public interface IWeatherProvider
     {
         WeatherResult GetWeatherResultFromProviderByArea(string location);
-        WeatherResult Aggregate(string imperialJson, string metricJson, string location);
+        WeatherResult Aggregate(List<ImperialResponse> imperialResponses, List<MetricResponse> metricResponses,
+            string location);
     }
 }

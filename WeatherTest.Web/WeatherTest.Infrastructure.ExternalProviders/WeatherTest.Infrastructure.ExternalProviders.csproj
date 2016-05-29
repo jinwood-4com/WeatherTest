@@ -40,10 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\AccuResponse.cs" />
-    <Compile Include="Models\BbcResponse.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WeatherProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeatherTest.Core\WeatherTest.Core.csproj">
