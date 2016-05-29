@@ -14,26 +14,30 @@ namespace WeatherTest.Infrastructure.ExternalProviders
             _restService = restService;
         }
 
-        public WeatherResult GetWeatherResultFromProviderByArea(string area)
+        public WeatherResult GetWeatherResultFromProviderByArea(string location)
         {
-            var accuUri = new Uri($"http://localhost:53077/api/weather/{area}");
+            var accuUri = new Uri($"http://localhost:53077/api/Accuweather/{location}");
             var accuResult = _restService.Get(accuUri);
 
-            var bbcUri = new Uri("http://localhost:53077/api/weather/{area}");
+            var bbcUri = new Uri($"http://localhost:53523/api/bbcweather/{location}");
             var bbcResult = _restService.Get(bbcUri);
 
-            return Aggregate(accuResult, bbcResult);
+            return Aggregate(accuResult, bbcResult, location);
         }
 
-        public WeatherResult Aggregate(string imperialJson, string metricJson)
+        public WeatherResult Aggregate(string imperialJson, string metricJson, string location)
         {
             var accuResult = _restService.Deserialize<AccuResponse>(imperialJson);
             var bbcResult = _restService.Deserialize<BbcResponse>(metricJson);
 
+            accuResult.WindSpeedKph = 8;
+            bbcResult.WindSpeedMph = 10;
+
             var weatherResult = new WeatherResult
             {
-                AverageWindSpeedMph = bbcResult.WindSpeedMph + accuResult.WindspeedMph()/2,
-                AverageTemperatureCelcius = bbcResult.TemperatureFahrenheit + accuResult.WindspeedMph()/2
+                AverageWindSpeedMph = Math.Round((bbcResult.WindSpeedMph + accuResult.WindspeedMph())/2,2),
+                AverageTemperatureCelcius = Math.Round((bbcResult.TemperatureCelcius() + accuResult.TemperatureCelsius)/2,2),
+                Location = location
             };
             
             return weatherResult;

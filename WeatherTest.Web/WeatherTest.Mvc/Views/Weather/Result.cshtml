@@ -6,3 +6,74 @@
 
 <h2>Result</h2>
 
+<select id="unitSelect">
+    <option value="Metric">Metric</option>
+    <option value="Imperial">Imperial</option>
+</select>
+
+<div>
+    @Html.Label("Average Temperature")
+    <span id="temp">@Html.DisplayFor(m => m.AverageTemperatureCelcius)</span> <span id="tempUnit"></span>
+</div>
+<div>
+    @Html.Label("Average Wind Speed")
+    <span id="wind">@Html.DisplayTextFor(m => m.AverageWindSpeedMph)</span> <span id="windUnit"></span>
+</div>
+
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    var units, temp, wind;
+
+    $(function() {
+        units = $("#unitSelect").val();
+        if (units === "Metric") {
+            setUnitLabelImperial();
+        } else {
+            setUnitLabelMetric();
+        }
+    });
+
+    $('#unitSelect').change(function () {
+        units = $("#unitSelect").val();
+        toggle();
+    });
+
+    function toggle() {
+        if (units === "Imperial") {
+            setUnitLabelImperial();
+            convertToImperial();
+        } else {
+            setUnitLabelMetric();
+            convertToMetric();
+        }
+    }
+
+    function setUnitLabelImperial() {
+        $('#tempUnit').html("Farenheit");
+        $('#windUnit').html("Kph");
+    }
+
+    function setUnitLabelMetric() {
+        $('#tempUnit').html("Celcius");
+        $('#windUnit').html("Mph");
+    }
+
+    function convertToImperial() {
+        temp = $('#temp').text();
+        wind = $('#wind').text();
+
+        temp = (temp - 32) * 5 / 9;
+        wind = wind * 1.60;
+        $('#temp').text(temp.toFixed(2));
+        $('#wind').text(wind.toFixed(2));
+    }
+    function convertToMetric() {
+        temp = $('#temp').text();
+        wind = $('#wind').text();
+
+        temp = temp * 9 / 5 + 32;
+        wind = wind / 1.60;
+        $('#temp').text(temp.toFixed(2));
+        $('#wind').text(wind.toFixed(2));
+    }
+</script>

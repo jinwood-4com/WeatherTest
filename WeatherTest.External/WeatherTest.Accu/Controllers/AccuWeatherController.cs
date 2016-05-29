@@ -8,8 +8,8 @@ using WeatherTest.Accu.Models;
 
 namespace WeatherTest.Accu.Controllers
 {
-    [RoutePrefix("api/weather")]
-    public class WeatherController : ApiController
+    [RoutePrefix("api/accuweather")]
+    public class AccuWeatherController : ApiController
     {
         private System.Random _rng = new Random();
 

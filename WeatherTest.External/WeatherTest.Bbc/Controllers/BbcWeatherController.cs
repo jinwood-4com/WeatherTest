@@ -4,8 +4,8 @@ using WeatherTest.Bbc.Models;
 
 namespace WeatherTest.Bbc.Controllers
 {
-    [RoutePrefix("api/weather")]
-    public class WeatherController : ApiController
+    [RoutePrefix("api/bbcweather")]
+    public class BbcWeatherController : ApiController
     {
         private System.Random _rng = new Random();
 
