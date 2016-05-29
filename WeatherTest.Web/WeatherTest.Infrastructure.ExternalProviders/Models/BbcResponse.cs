@@ -3,7 +3,7 @@
     public class BbcResponse
     {
         public string Location { get; set; }
-        public string TemperatureFahrenheit { get; set; }
-        public string WindSpeedMph { get; set; }
+        public double TemperatureFahrenheit { get; set; }
+        public double WindSpeedMph { get; set; }
     }
 }
