@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using AutoMapper;
 using WeatherTest.Core.Interfaces;
 using WeatherTest.Core.Objects;
@@ -16,16 +17,24 @@ namespace WeatherTest.Mvc.Controllers
         }
 
 
-        // GET: Weather
         public ActionResult Get(LocationModel model)
         {
             var weatherResult = _weatherService.GetWeatherForArea(model.Location);
+            if (weatherResult == null || double.IsNaN(weatherResult.AverageTemperatureCelcius) || double.IsNaN(weatherResult.AverageWindSpeedMph))
+            {
+                return RedirectToAction("ServiceDown");
+            }
             return RedirectToAction("Result", weatherResult);
         }
 
         public ActionResult Result(WeatherResult weatherResult)
         {
             return View(Mapper.Map<WeatherResultModel>(weatherResult));
+        }
+
+        public ActionResult ServiceDown()
+        {
+            return View();
         }
     }
 }

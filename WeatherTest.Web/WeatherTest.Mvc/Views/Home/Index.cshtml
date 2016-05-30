@@ -2,7 +2,7 @@
 @model LocationModel
 
 @{
-    ViewBag.Title = "Weather Test";
+    ViewBag.Title = "4Com Weather Test";
 }
 
 <h2>Weather Test</h2>
@@ -13,8 +13,22 @@
     <form>
         @Html.LabelFor(m => m.Location)
         @Html.EditorFor(m => m.Location, new { htmlAttributes = new { @class = "form-control" } })
-        <button type="submit" class="button">Submit</button>
+        <button type="submit" onclick="loading();" class="button btn btn-submit">Submit</button>
+        <img src="~/Content/Images/ajax-loader.gif" class="loader"/>
+        <span class="timeout">Weather services are slow to repsond, please wait.</span>
     </form>
 }
 
 
+<script type="text/javascript">
+    function loading() {
+        $('.loader').css("visibility", "visible");
+        setTimeout(function() {
+            $('.timeout').css("visibility", "visible");
+        }, 5000);
+    }
+
+    $(function() {
+
+    });
+</script>

@@ -16,3 +16,12 @@ textarea {
     max-width: 280px;
 }
 
+.loader {
+    visibility: hidden;
+}
+.timeout {
+    visibility: hidden;
+}
+.btn-submit {
+    margin-top: 10px;
+}

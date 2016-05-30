@@ -27,6 +27,9 @@ namespace WeatherTest.Infrastructure.ExternalProviders
                 var uri = new Uri(api.Url);
                 var jsonResponse = _restService.Get(uri);
 
+                if (jsonResponse == string.Empty)
+                    continue;
+
                 if (EnumHelper<MeasurmentType>.Parse(api.MeasurmentType) == MeasurmentType.Imperial)
                 {
                     imperialResults.Add(_restService.Deserialize<ImperialResponse>(jsonResponse));
@@ -77,24 +80,5 @@ namespace WeatherTest.Infrastructure.ExternalProviders
 
             return metricResponses;
         } 
-
-        //private List<Api> GetApis()
-        //{
-        //    return new List<Api>
-        //    {
-        //        new Api
-        //        {
-        //            MeasurmentType = MeasurmentType.Imperial,
-        //            Url = "http://localhost:53077/api/Accuweather/dorset",
-        //            Name = "Accu"
-        //        },
-        //        new Api
-        //        {
-        //            MeasurmentType = MeasurmentType.Metric,
-        //            Url = "http://localhost:53523/api/bbcweather/dorset",
-        //            Name = "BBC"
-        //        }
-        //    };
-        //} 
     }
 }
