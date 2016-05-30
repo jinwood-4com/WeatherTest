@@ -58,8 +58,8 @@ namespace WeatherTest.Infrastructure.ExternalProviders
                 totalWind += response.WindSpeedMph;
             }
             var weatherResult = new WeatherResult();
-            weatherResult.AverageTemperatureCelcius = totalTemp/totalCount;
-            weatherResult.AverageWindSpeedMph = totalWind/totalCount;
+            weatherResult.AverageTemperatureCelcius = Math.Round(totalTemp/totalCount, 2);
+            weatherResult.AverageWindSpeedMph = Math.Round(totalWind/totalCount, 2);
             weatherResult.Location = location;
 
             return weatherResult;
